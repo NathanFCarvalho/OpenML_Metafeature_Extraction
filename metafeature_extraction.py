@@ -35,11 +35,13 @@ def save_to_jsonl(data, filename):
         json.dump(data, file)
         file.write('\n')
 
-def subsample_dataset(X, y, subsample_size=5000):
+
+def subsample_dataset(X, y, subsample=False, subsample_size=5000):
     """Reduce the dataset size to subsample_size if it is too large."""
-    if len(X) > subsample_size:
+    if len(X) > subsample_size and subsample is True:
         X, _, y, _ = train_test_split(X, y, stratify=y, test_size=1 - subsample_size / len(X), random_state=42)
     return X, y
+
 
 def handle_nan(X):
     """Impute missing values: mean for numeric columns, mode for categorical columns."""
@@ -60,21 +62,21 @@ def handle_nan(X):
     return X
 
 
-def fetch_and_prepare_data(dataset_id, target=None):
+def fetch_and_prepare_data(dataset_id, subsample, target=None):
     """Fetch dataset from OpenML and handle missing values."""
     data = openml.datasets.get_dataset(dataset_id, download_data=False, download_qualities=False,
                                        download_features_meta_data=False, force_refresh_cache=True)
     X, y, _, _ = data.get_data(target=target)
     X = handle_nan(X)
     if target:
-        X, y = subsample_dataset(X, y)
+        X, y = subsample_dataset(X, y, subsample)
     return X, y
 
 
-def extract_metafeatures(dataset_id, target=None):
+def extract_metafeatures(dataset_id, subsample=False, target=None):
     """Extract metafeatures for a dataset, with or without a target column."""
     try:
-        X, y = fetch_and_prepare_data(dataset_id, target)
+        X, y = fetch_and_prepare_data(dataset_id, subsample, target)
         mfe = MFE()
         if y is not None:
             mfe.fit(X.to_numpy(), y.to_numpy())
@@ -99,4 +101,3 @@ def process_datasets(datasets_list, datasets_target):
             extract_metafeatures(dataset_id)
         else:
             extract_metafeatures(dataset_id, target)
-
