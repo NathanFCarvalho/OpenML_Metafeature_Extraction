@@ -61,7 +61,3 @@ def find_nearest_neighbors(metafeature_dataframe, dataset_id, k=20):
 
     return distances, ids
 
-
-df = pd.read_csv('files/openml_metafeatures.csv')
-print(find_nearest_neighbors(metafeature_dataframe=df, dataset_id=26))
-

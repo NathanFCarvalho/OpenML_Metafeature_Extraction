@@ -50,7 +50,7 @@ df = pd.read_csv('files/openml_metafeatures.csv')
 find_nearest_neighbors(metafeature_dataframe=df, dataset_id=26)
 ```
 In this example, I used the dataset nursery for this example, 
-and supposed I called the metafeature dataframe df. This function returns two values,
+and supposed I called the metafeature dataframe df. This function returns two lists,
 one list with the k closest datasets and one list with the
 corresponding distances:
 ```python
@@ -74,6 +74,9 @@ and big ones (>= 50,000). This division was done mainly for computational power 
 For datasets which had a target column, the `extract_metafeatures()` runs PyMFE normally.
 If a dataset does not have a target column, it runs PyMFE without specifying a target column, which results in 
 fewer metafeatures.
+
+There are some datasets on OpenML which have multiple target columns. For them, 
+I chose to run as if they had no target column.
 
 The csv file contains only small datasets, with and without target columns. Bigger datasets were not
 included.

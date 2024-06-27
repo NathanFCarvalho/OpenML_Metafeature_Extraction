@@ -102,4 +102,3 @@ def process_datasets(datasets_list, datasets_target):
         else:
             extract_metafeatures(dataset_id, target)
 
-extract_metafeatures(dataset_id=2)
