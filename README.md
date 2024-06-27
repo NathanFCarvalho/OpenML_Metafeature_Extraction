@@ -65,3 +65,15 @@ corresponding distances:
 
 In this example, the first 4 datasets (distances smaller than e-13) are, in fact, variations present in OpenML for the
 dataset nursery.
+
+## Creating the `openml_metafeatures.csv` file
+
+In order to create this file, datasets from OpenML were divised into small ones (< 50,000 instances) 
+and big ones (>= 50,000). This division was done mainly for computational power reasons.
+
+For datasets which had a target column, the `extract_metafeatures()` runs PyMFE normally.
+If a dataset does not have a target column, it runs PyMFE without specifying a target column, which results in 
+fewer metafeatures.
+
+The csv file contains only small datasets, with and without target columns. Bigger datasets were not
+included.
