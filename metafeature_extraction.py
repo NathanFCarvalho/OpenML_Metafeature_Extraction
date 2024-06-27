@@ -95,7 +95,7 @@ def extract_metafeatures(dataset_id, subsample=False, target=None):
 
 
 def process_datasets(datasets_list, datasets_target):
-    """Process a list of datasets and extract their metafeatures."""
+    """Process a list of datasets and extract their corresponding metafeatures."""
     for dataset_id, target in zip(datasets_list, datasets_target):
         if pd.isna(target):
             extract_metafeatures(dataset_id)

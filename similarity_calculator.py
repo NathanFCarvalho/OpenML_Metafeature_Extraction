@@ -39,7 +39,7 @@ def find_top_similar_features(df, dataset_index, x = 5):
 
 def find_nearest_neighbors(metafeature_dataframe, dataset_id, k=20):
     """
-    Finds the k closest datasets to a given dataset based on its metafeatures.
+    Finds k of the closest datasets to a given dataset based on its metafeatures.
     """
     # Convert the dictionary to a DataFrame
     df = metafeature_dataframe
