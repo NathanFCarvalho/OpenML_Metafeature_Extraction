@@ -29,12 +29,12 @@ def preprocess_dataframe(df):
 
 def find_top_similar_features(df, dataset_index, x = 5):
     """
-    Finds the top 10 features that are most similar to the target dataset before handling missing values.
+    Finds the top x features that are most similar to the target dataset before handling missing values.
     """
     target_dataset = df.iloc[dataset_index]
     similarities = df.corrwith(target_dataset, axis=0)
-    top_10_features = similarities.abs().sort_values(ascending=False).head(x).index.tolist()
-    return top_10_features
+    top_x_features = similarities.abs().sort_values(ascending=False).head(x).index.tolist()
+    return top_x_features
 
 
 def find_nearest_neighbors(metafeature_dataframe, dataset_id, k=20):
@@ -48,8 +48,8 @@ def find_nearest_neighbors(metafeature_dataframe, dataset_id, k=20):
     df = df.drop('dataset id', axis=1)
 
     # Select the top x most similar features before handling NaN values
-    top_10_features = find_top_similar_features(df, dataset_index)
-    df = df[top_10_features]
+    top_x_features = find_top_similar_features(df, dataset_index)
+    df = df[top_x_features]
 
     # Preprocess the DataFrame
     df_normalized = preprocess_dataframe(df)
