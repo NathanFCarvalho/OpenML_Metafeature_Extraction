@@ -64,7 +64,37 @@ corresponding distances:
   ```
 
 In this example, the first 4 datasets (distances smaller than e-13) are, in fact, variations present in OpenML for the
-dataset nursery.
+dataset nursery. 
+This code can be used to verify datasets which are variations on the same original one. For example, the underneath code is a code that can be used the repeated datasets inside the metadataset obtained from OpenML, using a similarity threshold of 1e-6.
+
+```python
+# Extract dataset IDs from the DataFrame
+dataset_ids = list(df['dataset id'])  # Assuming the metadataset is called df and is stored in a DataFrame
+
+# Initialize an empty list to hold groups of similar datasets
+groups = [
+    # Create a group of dataset IDs where the distance to ds is less than 1e-6
+    [id for dist, id in zip(*find_nearest_neighbors(df, ds)) if dist < 1e-6]
+    for ds in dataset_ids
+]
+
+# Filter out groups that have only one member (since they are not repeated)
+groups = [group for group in groups if len(group) > 1]
+
+# Initialize a set to keep track of seen groups and a list for unique groups
+seen = set()
+unique_lists = []
+
+# Iterate through the groups to filter out duplicates
+for group in groups:
+    tuple_group = tuple(group)  # Convert the group to a tuple so it can be added to the set
+    if tuple_group not in seen:  # If the group is not already in seen
+        seen.add(tuple_group)    # Add it to seen
+        unique_lists.append(group)
+
+# Print the list of unique groups
+print(unique_lists)
+  ```
 
 ## Creating the `openml_metafeatures.csv` file
 
