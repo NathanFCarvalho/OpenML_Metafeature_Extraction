@@ -24,7 +24,7 @@ stratification and randomly selects a specified number of rows.
 ### Recommendation System
 
 The `similarity_calculator.py` script is based on the sklearn 
-nearest neighbor algorithm using the euclidean metric and calculates similar datasets based on general metafeatures. The following steps are taken:
+nearest neighbor algorithm using the cosine metric and calculates similar datasets based on general metafeatures. The following steps are taken:
 - Preprocess the metafeatures DataFrame by replacing infinite values, 
 imputing missing values, and normalizing the data.
 - Find the nearest neighbors using the `sklearn` library.
